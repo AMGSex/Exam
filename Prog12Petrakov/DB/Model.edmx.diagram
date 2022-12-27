@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="bb2a3bba562d4c188f12e8b6e82e134e" Name="Diagram1">
+        <EntityTypeShape EntityType="prog12Model.RepairActs" Width="1.5" PointX="5.25" PointY="3.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="prog12Model.Roles" Width="1.5" PointX="3.75" PointY="10" IsExpanded="true" />
+        <EntityTypeShape EntityType="prog12Model.Sales" Width="1.5" PointX="8.25" PointY="3.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="prog12Model.Storage" Width="1.5" PointX="3" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="prog12Model.Telephones" Width="1.5" PointX="3" PointY="3.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="prog12Model.TelephoneTypes" Width="1.5" PointX="0.75" PointY="4" IsExpanded="true" />
+        <EntityTypeShape EntityType="prog12Model.TypesProblems" Width="1.5" PointX="3" PointY="7.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="prog12Model.Users" Width="1.5" PointX="6" PointY="9.625" IsExpanded="true" />
+        <AssociationConnector Association="prog12Model.FK_RepairActs_Storage" ManuallyRouted="false" />
+        <AssociationConnector Association="prog12Model.FK_RepairActs_Telephones" ManuallyRouted="false" />
+        <AssociationConnector Association="prog12Model.FK_RepairActs_TypesProblems" ManuallyRouted="false" />
+        <AssociationConnector Association="prog12Model.FK_Users_Roles" ManuallyRouted="false" />
+        <AssociationConnector Association="prog12Model.FK_Sales_Telephones" ManuallyRouted="false" />
+        <AssociationConnector Association="prog12Model.FK_Sales_Users" ManuallyRouted="false" />
+        <AssociationConnector Association="prog12Model.FK_Telephones_TelephoneTypes" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

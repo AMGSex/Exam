@@ -1,0 +1,520 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="Хранилище prog12Model" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="RepairActs">
+          <Key>
+            <PropertyRef Name="Id_Act" />
+          </Key>
+          <Property Name="Id_Act" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Id_Telephone" Type="int" Nullable="false" />
+          <Property Name="Id_TypeProblem" Type="int" Nullable="false" />
+          <Property Name="Id_RepairMaterial" Type="int" Nullable="false" />
+          <Property Name="CountRepairMaterials" Type="decimal" Precision="10" Scale="0" Nullable="false" />
+          <Property Name="PriceRepair" Type="decimal" Precision="10" Scale="0" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Roles">
+          <Key>
+            <PropertyRef Name="Id_Role" />
+          </Key>
+          <Property Name="Id_Role" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="NameRole" Type="varchar" MaxLength="30" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Sales">
+          <Key>
+            <PropertyRef Name="Id_Sale" />
+          </Key>
+          <Property Name="Id_Sale" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Id_Telephone" Type="int" Nullable="false" />
+          <Property Name="Id_User" Type="int" Nullable="false" />
+          <Property Name="DateOfSale" Type="date" Nullable="false" />
+          <Property Name="Issued" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Storage">
+          <Key>
+            <PropertyRef Name="Id_Storage" />
+          </Key>
+          <Property Name="Id_Storage" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="NameStorage" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="ActualValue" Type="decimal" Precision="10" Scale="0" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Telephones">
+          <Key>
+            <PropertyRef Name="Id_Telephone" />
+          </Key>
+          <Property Name="Id_Telephone" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="NameTelephone" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="IsAvailable" Type="bit" Nullable="false" />
+          <Property Name="Id_TelephoneType" Type="int" Nullable="false" />
+          <Property Name="Price" Type="decimal" Precision="10" Scale="0" Nullable="false" />
+          <Property Name="Photo" Type="text" />
+        </EntityType>
+        <EntityType Name="TelephoneTypes">
+          <Key>
+            <PropertyRef Name="Id_TelephoneType" />
+          </Key>
+          <Property Name="Id_TelephoneType" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="NameType" Type="varchar" MaxLength="30" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TypesProblems">
+          <Key>
+            <PropertyRef Name="Id_TypeProblem" />
+          </Key>
+          <Property Name="Id_TypeProblem" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="NameTypeProblem" Type="varchar" MaxLength="40" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Users">
+          <Key>
+            <PropertyRef Name="Id_User" />
+          </Key>
+          <Property Name="Id_User" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Login" Type="nvarchar" MaxLength="20" />
+          <Property Name="Password" Type="nvarchar" MaxLength="25" />
+          <Property Name="Name" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Id_Role" Type="int" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_RepairActs_Storage">
+          <End Role="Storage" Type="Self.Storage" Multiplicity="1" />
+          <End Role="RepairActs" Type="Self.RepairActs" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Storage">
+              <PropertyRef Name="Id_Storage" />
+            </Principal>
+            <Dependent Role="RepairActs">
+              <PropertyRef Name="Id_RepairMaterial" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RepairActs_Telephones">
+          <End Role="Telephones" Type="Self.Telephones" Multiplicity="1" />
+          <End Role="RepairActs" Type="Self.RepairActs" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Telephones">
+              <PropertyRef Name="Id_Telephone" />
+            </Principal>
+            <Dependent Role="RepairActs">
+              <PropertyRef Name="Id_Telephone" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RepairActs_TypesProblems">
+          <End Role="TypesProblems" Type="Self.TypesProblems" Multiplicity="1" />
+          <End Role="RepairActs" Type="Self.RepairActs" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TypesProblems">
+              <PropertyRef Name="Id_TypeProblem" />
+            </Principal>
+            <Dependent Role="RepairActs">
+              <PropertyRef Name="Id_TypeProblem" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Sales_Telephones">
+          <End Role="Telephones" Type="Self.Telephones" Multiplicity="1" />
+          <End Role="Sales" Type="Self.Sales" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Telephones">
+              <PropertyRef Name="Id_Telephone" />
+            </Principal>
+            <Dependent Role="Sales">
+              <PropertyRef Name="Id_Telephone" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Sales_Users">
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="Sales" Type="Self.Sales" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="Id_User" />
+            </Principal>
+            <Dependent Role="Sales">
+              <PropertyRef Name="Id_User" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Telephones_TelephoneTypes">
+          <End Role="TelephoneTypes" Type="Self.TelephoneTypes" Multiplicity="1" />
+          <End Role="Telephones" Type="Self.Telephones" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TelephoneTypes">
+              <PropertyRef Name="Id_TelephoneType" />
+            </Principal>
+            <Dependent Role="Telephones">
+              <PropertyRef Name="Id_TelephoneType" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Users_Roles">
+          <End Role="Roles" Type="Self.Roles" Multiplicity="1" />
+          <End Role="Users" Type="Self.Users" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Roles">
+              <PropertyRef Name="Id_Role" />
+            </Principal>
+            <Dependent Role="Users">
+              <PropertyRef Name="Id_Role" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Хранилище prog12ModelContainer">
+          <EntitySet Name="RepairActs" EntityType="Self.RepairActs" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Roles" EntityType="Self.Roles" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Sales" EntityType="Self.Sales" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Storage" EntityType="Self.Storage" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Telephones" EntityType="Self.Telephones" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TelephoneTypes" EntityType="Self.TelephoneTypes" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TypesProblems" EntityType="Self.TypesProblems" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_RepairActs_Storage" Association="Self.FK_RepairActs_Storage">
+            <End Role="Storage" EntitySet="Storage" />
+            <End Role="RepairActs" EntitySet="RepairActs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RepairActs_Telephones" Association="Self.FK_RepairActs_Telephones">
+            <End Role="Telephones" EntitySet="Telephones" />
+            <End Role="RepairActs" EntitySet="RepairActs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RepairActs_TypesProblems" Association="Self.FK_RepairActs_TypesProblems">
+            <End Role="TypesProblems" EntitySet="TypesProblems" />
+            <End Role="RepairActs" EntitySet="RepairActs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Sales_Telephones" Association="Self.FK_Sales_Telephones">
+            <End Role="Telephones" EntitySet="Telephones" />
+            <End Role="Sales" EntitySet="Sales" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Sales_Users" Association="Self.FK_Sales_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Sales" EntitySet="Sales" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Telephones_TelephoneTypes" Association="Self.FK_Telephones_TelephoneTypes">
+            <End Role="TelephoneTypes" EntitySet="TelephoneTypes" />
+            <End Role="Telephones" EntitySet="Telephones" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Users_Roles" Association="Self.FK_Users_Roles">
+            <End Role="Roles" EntitySet="Roles" />
+            <End Role="Users" EntitySet="Users" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="prog12Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="RepairActs">
+          <Key>
+            <PropertyRef Name="Id_Act" />
+          </Key>
+          <Property Name="Id_Act" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Id_Telephone" Type="Int32" Nullable="false" />
+          <Property Name="Id_TypeProblem" Type="Int32" Nullable="false" />
+          <Property Name="Id_RepairMaterial" Type="Int32" Nullable="false" />
+          <Property Name="CountRepairMaterials" Type="Decimal" Precision="10" Scale="0" Nullable="false" />
+          <Property Name="PriceRepair" Type="Decimal" Precision="10" Scale="0" Nullable="false" />
+          <NavigationProperty Name="Storage" Relationship="Self.FK_RepairActs_Storage" FromRole="RepairActs" ToRole="Storage" />
+          <NavigationProperty Name="Telephones" Relationship="Self.FK_RepairActs_Telephones" FromRole="RepairActs" ToRole="Telephones" />
+          <NavigationProperty Name="TypesProblems" Relationship="Self.FK_RepairActs_TypesProblems" FromRole="RepairActs" ToRole="TypesProblems" />
+        </EntityType>
+        <EntityType Name="Roles">
+          <Key>
+            <PropertyRef Name="Id_Role" />
+          </Key>
+          <Property Name="Id_Role" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NameRole" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Users" Relationship="Self.FK_Users_Roles" FromRole="Roles" ToRole="Users" />
+        </EntityType>
+        <EntityType Name="Sales">
+          <Key>
+            <PropertyRef Name="Id_Sale" />
+          </Key>
+          <Property Name="Id_Sale" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Id_Telephone" Type="Int32" Nullable="false" />
+          <Property Name="Id_User" Type="Int32" Nullable="false" />
+          <Property Name="DateOfSale" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Issued" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Telephones" Relationship="Self.FK_Sales_Telephones" FromRole="Sales" ToRole="Telephones" />
+          <NavigationProperty Name="Users" Relationship="Self.FK_Sales_Users" FromRole="Sales" ToRole="Users" />
+        </EntityType>
+        <EntityType Name="Storage">
+          <Key>
+            <PropertyRef Name="Id_Storage" />
+          </Key>
+          <Property Name="Id_Storage" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NameStorage" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ActualValue" Type="Decimal" Precision="10" Scale="0" Nullable="false" />
+          <NavigationProperty Name="RepairActs" Relationship="Self.FK_RepairActs_Storage" FromRole="Storage" ToRole="RepairActs" />
+        </EntityType>
+        <EntityType Name="Telephones">
+          <Key>
+            <PropertyRef Name="Id_Telephone" />
+          </Key>
+          <Property Name="Id_Telephone" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NameTelephone" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="IsAvailable" Type="Boolean" Nullable="false" />
+          <Property Name="Id_TelephoneType" Type="Int32" Nullable="false" />
+          <Property Name="Price" Type="Decimal" Precision="10" Scale="0" Nullable="false" />
+          <NavigationProperty Name="RepairActs" Relationship="Self.FK_RepairActs_Telephones" FromRole="Telephones" ToRole="RepairActs" />
+          <NavigationProperty Name="Sales" Relationship="Self.FK_Sales_Telephones" FromRole="Telephones" ToRole="Sales" />
+          <NavigationProperty Name="TelephoneTypes" Relationship="Self.FK_Telephones_TelephoneTypes" FromRole="Telephones" ToRole="TelephoneTypes" />
+          <Property Name="Photo" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="TelephoneTypes">
+          <Key>
+            <PropertyRef Name="Id_TelephoneType" />
+          </Key>
+          <Property Name="Id_TelephoneType" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NameType" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Telephones" Relationship="Self.FK_Telephones_TelephoneTypes" FromRole="TelephoneTypes" ToRole="Telephones" />
+        </EntityType>
+        <EntityType Name="TypesProblems">
+          <Key>
+            <PropertyRef Name="Id_TypeProblem" />
+          </Key>
+          <Property Name="Id_TypeProblem" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NameTypeProblem" Type="String" MaxLength="40" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="RepairActs" Relationship="Self.FK_RepairActs_TypesProblems" FromRole="TypesProblems" ToRole="RepairActs" />
+        </EntityType>
+        <EntityType Name="Users">
+          <Key>
+            <PropertyRef Name="Id_User" />
+          </Key>
+          <Property Name="Id_User" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Login" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="Password" Type="String" MaxLength="25" FixedLength="false" Unicode="true" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Id_Role" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Roles" Relationship="Self.FK_Users_Roles" FromRole="Users" ToRole="Roles" />
+          <NavigationProperty Name="Sales" Relationship="Self.FK_Sales_Users" FromRole="Users" ToRole="Sales" />
+        </EntityType>
+        <Association Name="FK_RepairActs_Storage">
+          <End Role="Storage" Type="Self.Storage" Multiplicity="1" />
+          <End Role="RepairActs" Type="Self.RepairActs" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Storage">
+              <PropertyRef Name="Id_Storage" />
+            </Principal>
+            <Dependent Role="RepairActs">
+              <PropertyRef Name="Id_RepairMaterial" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RepairActs_Telephones">
+          <End Role="Telephones" Type="Self.Telephones" Multiplicity="1" />
+          <End Role="RepairActs" Type="Self.RepairActs" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Telephones">
+              <PropertyRef Name="Id_Telephone" />
+            </Principal>
+            <Dependent Role="RepairActs">
+              <PropertyRef Name="Id_Telephone" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RepairActs_TypesProblems">
+          <End Role="TypesProblems" Type="Self.TypesProblems" Multiplicity="1" />
+          <End Role="RepairActs" Type="Self.RepairActs" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TypesProblems">
+              <PropertyRef Name="Id_TypeProblem" />
+            </Principal>
+            <Dependent Role="RepairActs">
+              <PropertyRef Name="Id_TypeProblem" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Users_Roles">
+          <End Role="Roles" Type="Self.Roles" Multiplicity="1" />
+          <End Role="Users" Type="Self.Users" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Roles">
+              <PropertyRef Name="Id_Role" />
+            </Principal>
+            <Dependent Role="Users">
+              <PropertyRef Name="Id_Role" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Sales_Telephones">
+          <End Role="Telephones" Type="Self.Telephones" Multiplicity="1" />
+          <End Role="Sales" Type="Self.Sales" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Telephones">
+              <PropertyRef Name="Id_Telephone" />
+            </Principal>
+            <Dependent Role="Sales">
+              <PropertyRef Name="Id_Telephone" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Sales_Users">
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="Sales" Type="Self.Sales" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="Id_User" />
+            </Principal>
+            <Dependent Role="Sales">
+              <PropertyRef Name="Id_User" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Telephones_TelephoneTypes">
+          <End Role="TelephoneTypes" Type="Self.TelephoneTypes" Multiplicity="1" />
+          <End Role="Telephones" Type="Self.Telephones" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TelephoneTypes">
+              <PropertyRef Name="Id_TelephoneType" />
+            </Principal>
+            <Dependent Role="Telephones">
+              <PropertyRef Name="Id_TelephoneType" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="prog12Entities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="RepairActs" EntityType="Self.RepairActs" />
+          <EntitySet Name="Roles" EntityType="Self.Roles" />
+          <EntitySet Name="Sales" EntityType="Self.Sales" />
+          <EntitySet Name="Storage" EntityType="Self.Storage" />
+          <EntitySet Name="Telephones" EntityType="Self.Telephones" />
+          <EntitySet Name="TelephoneTypes" EntityType="Self.TelephoneTypes" />
+          <EntitySet Name="TypesProblems" EntityType="Self.TypesProblems" />
+          <EntitySet Name="Users" EntityType="Self.Users" />
+          <AssociationSet Name="FK_RepairActs_Storage" Association="Self.FK_RepairActs_Storage">
+            <End Role="Storage" EntitySet="Storage" />
+            <End Role="RepairActs" EntitySet="RepairActs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RepairActs_Telephones" Association="Self.FK_RepairActs_Telephones">
+            <End Role="Telephones" EntitySet="Telephones" />
+            <End Role="RepairActs" EntitySet="RepairActs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RepairActs_TypesProblems" Association="Self.FK_RepairActs_TypesProblems">
+            <End Role="TypesProblems" EntitySet="TypesProblems" />
+            <End Role="RepairActs" EntitySet="RepairActs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Users_Roles" Association="Self.FK_Users_Roles">
+            <End Role="Roles" EntitySet="Roles" />
+            <End Role="Users" EntitySet="Users" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Sales_Telephones" Association="Self.FK_Sales_Telephones">
+            <End Role="Telephones" EntitySet="Telephones" />
+            <End Role="Sales" EntitySet="Sales" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Sales_Users" Association="Self.FK_Sales_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Sales" EntitySet="Sales" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Telephones_TelephoneTypes" Association="Self.FK_Telephones_TelephoneTypes">
+            <End Role="TelephoneTypes" EntitySet="TelephoneTypes" />
+            <End Role="Telephones" EntitySet="Telephones" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Хранилище prog12ModelContainer" CdmEntityContainer="prog12Entities">
+          <EntitySetMapping Name="RepairActs">
+            <EntityTypeMapping TypeName="prog12Model.RepairActs">
+              <MappingFragment StoreEntitySet="RepairActs">
+                <ScalarProperty Name="Id_Act" ColumnName="Id_Act" />
+                <ScalarProperty Name="Id_Telephone" ColumnName="Id_Telephone" />
+                <ScalarProperty Name="Id_TypeProblem" ColumnName="Id_TypeProblem" />
+                <ScalarProperty Name="Id_RepairMaterial" ColumnName="Id_RepairMaterial" />
+                <ScalarProperty Name="CountRepairMaterials" ColumnName="CountRepairMaterials" />
+                <ScalarProperty Name="PriceRepair" ColumnName="PriceRepair" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Roles">
+            <EntityTypeMapping TypeName="prog12Model.Roles">
+              <MappingFragment StoreEntitySet="Roles">
+                <ScalarProperty Name="Id_Role" ColumnName="Id_Role" />
+                <ScalarProperty Name="NameRole" ColumnName="NameRole" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Sales">
+            <EntityTypeMapping TypeName="prog12Model.Sales">
+              <MappingFragment StoreEntitySet="Sales">
+                <ScalarProperty Name="Id_Sale" ColumnName="Id_Sale" />
+                <ScalarProperty Name="Id_Telephone" ColumnName="Id_Telephone" />
+                <ScalarProperty Name="Id_User" ColumnName="Id_User" />
+                <ScalarProperty Name="DateOfSale" ColumnName="DateOfSale" />
+                <ScalarProperty Name="Issued" ColumnName="Issued" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Storage">
+            <EntityTypeMapping TypeName="prog12Model.Storage">
+              <MappingFragment StoreEntitySet="Storage">
+                <ScalarProperty Name="Id_Storage" ColumnName="Id_Storage" />
+                <ScalarProperty Name="NameStorage" ColumnName="NameStorage" />
+                <ScalarProperty Name="ActualValue" ColumnName="ActualValue" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Telephones">
+            <EntityTypeMapping TypeName="prog12Model.Telephones">
+              <MappingFragment StoreEntitySet="Telephones">
+                <ScalarProperty Name="Photo" ColumnName="Photo" />
+                <ScalarProperty Name="Id_Telephone" ColumnName="Id_Telephone" />
+                <ScalarProperty Name="NameTelephone" ColumnName="NameTelephone" />
+                <ScalarProperty Name="IsAvailable" ColumnName="IsAvailable" />
+                <ScalarProperty Name="Id_TelephoneType" ColumnName="Id_TelephoneType" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TelephoneTypes">
+            <EntityTypeMapping TypeName="prog12Model.TelephoneTypes">
+              <MappingFragment StoreEntitySet="TelephoneTypes">
+                <ScalarProperty Name="Id_TelephoneType" ColumnName="Id_TelephoneType" />
+                <ScalarProperty Name="NameType" ColumnName="NameType" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TypesProblems">
+            <EntityTypeMapping TypeName="prog12Model.TypesProblems">
+              <MappingFragment StoreEntitySet="TypesProblems">
+                <ScalarProperty Name="Id_TypeProblem" ColumnName="Id_TypeProblem" />
+                <ScalarProperty Name="NameTypeProblem" ColumnName="NameTypeProblem" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="prog12Model.Users">
+              <MappingFragment StoreEntitySet="Users">
+                <ScalarProperty Name="Id_User" ColumnName="Id_User" />
+                <ScalarProperty Name="Login" ColumnName="Login" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id_Role" ColumnName="Id_Role" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Нет" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
